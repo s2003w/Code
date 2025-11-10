@@ -1,0 +1,59 @@
+clc; 
+
+clear; 
+
+close; 
+
+ 
+
+exec('C:\Users\MB541WS\Downloads\pskmod.sci'); 
+
+exec('C:\Users\MB541WS\Downloads\qammdo.sci'); 
+
+ 
+
+N = input("Enter number of bits to be grouped (N): "); 
+
+M = 2^N; 
+
+x = 0:M-1; 
+
+ 
+
+z = pskmod(x, M); 
+
+scf(); // create a new figure 
+
+ 
+
+subplot(1,2,1) 
+
+scatter(real(z), imag(z), "fill"); 
+
+h = gca(); // get current axes 
+
+h.data_bounds = [-1.5,1.5,-1.5,1.5]; // adjust axes boundaries 
+
+xtitle("E3221M-ary PSK", "In-phase", "Quadrature"); 
+
+ 
+
+y = qammod(x, M); 
+
+subplot(1,2,2) 
+
+scatter(real(y), imag(y), "fill"); 
+
+h = gca(); 
+
+h.data_bounds = [-3.5,3.5,-3.5,3.5]; 
+
+xtitle("E3221M-QAM", "In-phase", "Quadrature"); 
+
+ 
+
+ 
+
+ 
+
+ 
