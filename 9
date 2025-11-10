@@ -1,0 +1,93 @@
+clc; 
+
+clear; 
+
+n=input("(E3221)Enter the codeword length in LBC(n):"); 
+
+k=input("Enter the number of msg bit in LBC(k):"); 
+
+p=input("Enter the parity matrix"); 
+
+g=[eye(k,k)p]; 
+
+disp("generator matrix",g); 
+
+d=[0 0 0;0 0 1;0 1 0;0 1 1;1 0 0;1 0 1;1 1 0;1 1 1] 
+
+c=modulo(d*g,2); 
+
+disp("All codeword",c); 
+
+Hw=zeros(2^k,1); 
+
+for i=1:2^k 
+
+    wt=0; 
+
+    for j=1:n 
+
+        if c(i,j)==1 then  
+
+            wt=wt+1; 
+
+            end 
+
+end 
+
+Hw(i)=wt; 
+
+end 
+
+y=[c,Hw]; 
+
+disp('code vector with hamming weight',y); 
+
+dmin=Hw(2); 
+
+for i=2:2^k 
+
+    if dmin>Hw(i) then 
+
+        dmin=Hw(i); 
+
+        end  
+
+end 
+
+disp('Minimum hamming distance is',dmin); 
+
+td=dmin-1; 
+
+disp('Error detection capabilityh id code(in bits)is:',td); 
+
+tc=(dmin-1)/2; 
+
+disp('error correction capability of code(in bits)is',tc); 
+
+disp('Transpose of parity matrix is',p); 
+
+H=[p',eye(n-k,n-k)]; 
+
+disp(' parity check matrix is',H); 
+
+disp('Transpose of parity check matrix is',H'); 
+
+r=input("enter the received codeword"); 
+
+synd=modulo(r*H',2); 
+
+disp('Synd for received codeword is:',synd); 
+
+for i=1:size(H',1) 
+
+    if H'(i,1:n-k)==synd then 
+
+        r(i)=1-r(i); 
+
+        disp('Error is at location',i); 
+
+    end  
+
+end 
+
+disp('corrected codeword is',r); 
