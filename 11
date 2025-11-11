@@ -1,0 +1,26 @@
+clc;
+clear all;
+close all;
+n=input('Enter No of symbols');
+p=input('Enter their probabilities');
+[p,I]=sort(p,'descend');
+[d,L]=huffmandict(I,p);
+disp('probability codeword');
+for j=1:n
+ code=d{j,2};
+ fprintf('%d\t',I(j));
+ fprintf('%f\t',p(j));
+ disp([code]);
+end;
+H=sum(-p.*log2(p));
+eff=(H/L)*100;
+red=(1-(H/L))*100;
+disp('entropy');
+disp(H);
+disp('average length');
+disp(L);
+disp('efficiency in %');
+disp(eff);
+disp('redundancy in %');
+disp(red);
+ 
